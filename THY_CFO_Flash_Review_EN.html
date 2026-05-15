@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Turkish Airlines — CFO Flash Review FY2025</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg:       #080d18;
+  --s1:       #0e1525;
+  --s2:       #141d30;
+  --s3:       #1c273d;
+  --border:   rgba(255,255,255,0.06);
+  --border2:  rgba(255,255,255,0.11);
+  --gold:     #f0c040;
+  --gold2:    rgba(240,192,64,0.12);
+  --teal:     #2ed8a8;
+  --red:      #f26060;
+  --blue:     #6ab4f5;
+  --purple:   #a78bfa;
+  --amber:    #f59e0b;
+  --muted:    #5a6a85;
+  --text:     #dce4f0;
+  --text2:    #8a9ab8;
+  --text3:    #4a5872;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  line-height:1.5;
+}
+
+/* ── TOPBAR ── */
+.topbar{
+  background:var(--s1);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 36px;
+  height:60px;
+  position:sticky;top:0;z-index:99;
+}
+.brand{display:flex;align-items:center;gap:14px;}
+.badge{
+  width:34px;height:34px;
+  background:var(--gold);
+  border-radius:5px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:13px;
+  color:#08121e;letter-spacing:-0.3px;
+}
+.brand-name{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);}
+.brand-sub{font-size:10px;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-top:1px;}
+.vline{width:1px;height:28px;background:var(--border2);margin:0 6px;}
+.doc-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);}
+.doc-sub{font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-top:2px;}
+.topbar-right{display:flex;align-items:center;gap:20px;}
+.pill{
+  font-size:10px;font-family:'IBM Plex Mono',monospace;letter-spacing:0.4px;
+  padding:4px 10px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);
+}
+.pill.live{border-color:rgba(46,216,168,0.3);color:var(--teal);}
+.pill.live::before{content:'● ';font-size:8px;}
+
+/* ── PAGE ── */
+.page{padding:28px 36px 52px;max-width:1440px;margin:0 auto;}
+
+/* ── SECTION HEADER ── */
+.sh{
+  display:flex;align-items:center;gap:10px;
+  font-size:10px;font-weight:500;letter-spacing:2px;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:14px;
+}
+.sh::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:22px;}
+.kpi{
+  background:var(--s1);border:1px solid var(--border);border-radius:9px;
+  padding:16px 18px;position:relative;overflow:hidden;
+}
+.kpi.star{border-color:rgba(240,192,64,0.22);}
+.kpi.star::before{
+  content:'';position:absolute;left:0;top:0;
+  width:3px;height:100%;background:var(--gold);
+  border-radius:9px 0 0 9px;
+}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:9px;font-weight:500;}
+.kpi-val{
+  font-family:'Syne',sans-serif;font-size:20px;font-weight:700;
+  color:var(--text);line-height:1;margin-bottom:8px;
+}
+.kpi-val span{font-size:11px;font-weight:400;color:var(--muted);margin-left:1px;}
+.kpi-foot{display:flex;align-items:center;gap:7px;}
+.tag{
+  display:inline-flex;align-items:center;gap:2px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;
+  padding:2px 7px;border-radius:4px;
+}
+.tag.up{color:var(--teal);background:rgba(46,216,168,0.1);}
+.tag.dn{color:var(--red);background:rgba(242,96,96,0.1);}
+.tag.nt{color:var(--blue);background:rgba(106,180,245,0.1);}
+.kpi-prev{font-size:10px;color:var(--text3);font-family:'IBM Plex Mono',monospace;}
+
+/* ── GRID LAYOUTS ── */
+.g2{display:grid;grid-template-columns:1.35fr 1fr;gap:12px;margin-bottom:12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
+
+/* ── CHART CARD ── */
+.cc{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:9px;padding:20px 22px;
+}
+.cc-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
+.cc-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.cc-sub{font-size:11px;color:var(--muted);}
+.legend{display:flex;gap:12px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);}
+.ld{width:8px;height:8px;border-radius:2px;}
+.ch{position:relative;}
+
+/* ── RATIO TABLE ── */
+.ratio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
+.rc{background:var(--s1);border:1px solid var(--border);border-radius:9px;overflow:hidden;}
+.rc-head{
+  padding:12px 16px;background:var(--s2);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.rc-dot{width:6px;height:6px;border-radius:50%;}
+.rc-title{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--text2);}
+.rr{
+  display:grid;grid-template-columns:1fr 68px 72px 72px;
+  align-items:center;gap:6px;
+  padding:10px 16px;border-bottom:1px solid var(--border);
+}
+.rr:last-child{border-bottom:none;}
+.rn{font-size:12px;color:var(--text2);}
+.rn small{display:block;font-size:10px;color:var(--text3);margin-top:1px;}
+.rv{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;text-align:right;}
+.rv.dim{color:var(--muted);font-size:11px;}
+.bar-wrap{display:flex;align-items:center;gap:5px;}
+.bar-bg{flex:1;height:3px;background:var(--s3);border-radius:2px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:2px;}
+.chg{font-family:'IBM Plex Mono',monospace;font-size:10px;text-align:right;}
+
+/* ── SIGNAL CARDS ── */
+.sig{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:9px;padding:15px 17px;
+}
+.sig-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.sig-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;}
+.sig-body{font-size:11px;color:var(--text2);line-height:1.65;}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--s1);border-top:1px solid var(--border);
+  padding:18px 36px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.ft{font-size:11px;color:var(--text3);line-height:1.7;}
+.ftags{display:flex;gap:10px;}
+.ftag{font-size:10px;color:var(--text3);font-family:'IBM Plex Mono',monospace;border:1px solid var(--border);padding:3px 9px;border-radius:4px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand">
+    <div class="badge">THY</div>
+    <div>
+      <div class="brand-name">Turkish Airlines</div>
+      <div class="brand-sub">A.O. &amp; Consolidated Subsidiaries</div>
+    </div>
+    <div class="vline"></div>
+    <div>
+      <div class="doc-title">CFO Flash Review</div>
+      <div class="doc-sub">FY 2025 — Independently Audited Consolidated IFRS</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="pill live">AUDITED</span>
+    <span class="pill">31 December 2025</span>
+    <span class="pill">TRY Millions</span>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- KPI STRIP -->
+  <div class="sh">Key Performance Indicators</div>
+  <div class="kpi-row">
+
+    <div class="kpi star">
+      <div class="kpi-lbl">Revenue</div>
+      <div class="kpi-val">955,472 <span>Mn TRY</span></div>
+      <div class="kpi-foot">
+        <span class="tag up">▲ +28.2%</span>
+        <span class="kpi-prev">FY24: 745,430</span>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-lbl">EBITDA</div>
+      <div class="kpi-val">184,811 <span>Mn TRY</span></div>
+      <div class="kpi-foot">
+        <span class="tag up">▲ +21.0%</span>
+        <span class="kpi-prev">FY24: 152,699</span>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-lbl">Net Income</div>
+      <div class="kpi-val">118,117 <span>Mn TRY</span></div>
+      <div class="kpi-foot">
+        <span class="tag up">▲ +4.2%</span>
+        <span class="kpi-prev">FY24: 113,357</span>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-lbl">Free Cash Flow</div>
+      <div class="kpi-val">105,696 <span>Mn TRY</span></div>
+      <div class="kpi-foot">
+        <span class="tag dn">▼ −6.1%</span>
+        <span class="kpi-prev">FY24: 112,511</span>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-lbl">Total Assets</div>
+      <div class="kpi-val">1,996,745 <span>Mn TRY</span></div>
+      <div class="kpi-foot">
+        <span class="tag up">▲ +42.7%</span>
+        <span class="kpi-prev">FY24: 1,399,606</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 1: Bar + Margins -->
+  <div class="sh">P&amp;L Overview</div>
+  <div class="g2">
+
+    <div class="cc">
+      <div class="cc-head">
+        <div>
+          <div class="cc-title">Revenue · EBITDA · EBIT · Net Income</div>
+          <div class="cc-sub">TRY Millions — FY2024 vs FY2025</div>
+        </div>
+        <div class="legend">
+          <span class="li"><span class="ld" style="background:#f0c040"></span>FY2025</span>
+          <span class="li"><span class="ld" style="background:#2a3a56"></span>FY2024</span>
+        </div>
+      </div>
+      <div class="ch" style="height:240px">
+        <canvas id="barChart" role="img" aria-label="THY Revenue EBITDA EBIT Net Income FY2024 vs FY2025"></canvas>
+      </div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-head">
+        <div>
+          <div class="cc-title">Profitability Margins</div>
+          <div class="cc-sub">% of Revenue — FY2024 vs FY2025</div>
+        </div>
+        <div class="legend">
+          <span class="li"><span class="ld" style="background:#6ab4f5"></span>FY2025</span>
+          <span class="li"><span class="ld" style="background:#2a3a56"></span>FY2024</span>
+        </div>
+      </div>
+      <div class="ch" style="height:240px">
+        <canvas id="marginChart" role="img" aria-label="THY profitability margins FY2024 vs FY2025"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: Asset Mix + Cash Flow + Capital Structure -->
+  <div class="sh">Balance Sheet &amp; Cash Flow</div>
+  <div class="g3">
+
+    <div class="cc">
+      <div class="cc-head">
+        <div>
+          <div class="cc-title">Asset Composition — FY2025</div>
+          <div class="cc-sub">Total Assets: 1,996,745 Mn TRY</div>
+        </div>
+      </div>
+      <div class="ch" style="height:190px">
+        <canvas id="assetChart" role="img" aria-label="THY asset composition FY2025"></canvas>
+      </div>
+      <div class="legend" style="margin-top:11px;justify-content:center;gap:9px;flex-wrap:wrap">
+        <span class="li"><span class="ld" style="background:#2ed8a8"></span>ROU Assets (42.5%)</span>
+        <span class="li"><span class="ld" style="background:#f0c040"></span>PP&amp;E (18.2%)</span>
+        <span class="li"><span class="ld" style="background:#6ab4f5"></span>Fin. Invest. (10.4%)</span>
+        <span class="li"><span class="ld" style="background:#a78bfa"></span>Cash + AR (6.6%)</span>
+        <span class="li"><span class="ld" style="background:#2a3a56"></span>Other (22.3%)</span>
+      </div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-head">
+        <div>
+          <div class="cc-title">Cash Flow Bridge</div>
+          <div class="cc-sub">Operating / Investing / Financing / FCF</div>
+        </div>
+        <div class="legend">
+          <span class="li"><span class="ld" style="background:#2a3a56"></span>FY24</span>
+          <span class="li"><span class="ld" style="background:#2ed8a8"></span>FY25 +</span>
+          <span class="li"><span class="ld" style="background:#f26060"></span>FY25 −</span>
+        </div>
+      </div>
+      <div class="ch" style="height:220px">
+        <canvas id="cfChart" role="img" aria-label="THY cash flow bridge FY2024 vs FY2025"></canvas>
+      </div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-head">
+        <div>
+          <div class="cc-title">Capital Structure — FY2025</div>
+          <div class="cc-sub">ST Liab / LT Liab / Equity</div>
+        </div>
+      </div>
+      <div class="ch" style="height:190px">
+        <canvas id="capChart" role="img" aria-label="THY capital structure FY2025"></canvas>
+      </div>
+      <div class="legend" style="margin-top:11px;justify-content:center;gap:9px;flex-wrap:wrap">
+        <span class="li"><span class="ld" style="background:#f26060"></span>ST Liab. (22.1%)</span>
+        <span class="li"><span class="ld" style="background:#f59e0b"></span>LT Liab. (32.2%)</span>
+        <span class="li"><span class="ld" style="background:#2ed8a8"></span>Equity (45.6%)</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RATIO ANALYSIS -->
+  <div class="sh">Ratio Analysis — FY2024 vs FY2025</div>
+  <div class="ratio-grid">
+
+    <!-- LIQUIDITY -->
+    <div class="rc">
+      <div class="rc-head">
+        <div class="rc-dot" style="background:#6ab4f5"></div>
+        <div class="rc-title">Liquidity Ratios</div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Current Ratio<small>Current Assets / ST Liabilities</small></div>
+        <div class="rv dim">1.007x</div>
+        <div class="rv" style="color:#6ab4f5">0.987x</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:49%;background:#6ab4f5"></div></div>
+        </div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Quick Ratio<small>(Current A. − Inventory) / ST Liab.</small></div>
+        <div class="rv dim">0.937x</div>
+        <div class="rv" style="color:#6ab4f5">0.894x</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:45%;background:#6ab4f5"></div></div>
+        </div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Cash Ratio<small>Cash &amp; Equiv. / ST Liabilities</small></div>
+        <div class="rv dim">0.283x</div>
+        <div class="rv" style="color:#6ab4f5">0.195x</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:20%;background:#6ab4f5"></div></div>
+        </div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Net Working Capital<small>Current A. − ST Liab. (Mn TRY)</small></div>
+        <div class="rv dim">+2,377</div>
+        <div class="rv" style="color:#f26060">−5,664</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:8%;background:#f26060"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVERAGE -->
+    <div class="rc">
+      <div class="rc-head">
+        <div class="rc-dot" style="background:#f59e0b"></div>
+        <div class="rc-title">Leverage &amp; Solvency</div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Debt / Equity<small>Total Financial Debt / Equity</small></div>
+        <div class="rv dim">0.72x</div>
+        <div class="rv" style="color:#f59e0b">0.84x</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:42%;background:#f59e0b"></div></div>
+        </div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Net Debt / EBITDA<small>(Total Debt − Cash) / EBITDA</small></div>
+        <div class="rv dim">2.58x</div>
+        <div class="rv" style="color:#f26060">3.67x</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:73%;background:#f26060"></div></div>
+        </div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Interest Coverage<small>EBITDA / Interest Expense</small></div>
+        <div class="rv dim">7.23x</div>
+        <div class="rv" style="color:#2ed8a8">8.61x</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#2ed8a8">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:86%;background:#2ed8a8"></div></div>
+        </div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Leverage Ratio<small>Total Liabilities / Total Assets</small></div>
+        <div class="rv dim">51.4%</div>
+        <div class="rv" style="color:#f59e0b">54.4%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:54%;background:#f59e0b"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFITABILITY -->
+    <div class="rc">
+      <div class="rc-head">
+        <div class="rc-dot" style="background:#2ed8a8"></div>
+        <div class="rc-title">Profitability Ratios</div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Return on Equity (ROE)<small>Net Income / Total Equity</small></div>
+        <div class="rv dim">16.7%</div>
+        <div class="rv" style="color:#2ed8a8">13.0%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:65%;background:#2ed8a8"></div></div>
+        </div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Return on Assets (ROA)<small>Net Income / Total Assets</small></div>
+        <div class="rv dim">8.1%</div>
+        <div class="rv" style="color:#2ed8a8">5.9%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:30%;background:#2ed8a8"></div></div>
+        </div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">EBITDA Margin<small>EBITDA / Revenue</small></div>
+        <div class="rv dim">20.5%</div>
+        <div class="rv" style="color:#2ed8a8">19.3%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:97%;background:#2ed8a8"></div></div>
+        </div>
+      </div>
+
+      <div class="rr">
+        <div class="rn">Asset Turnover<small>Revenue / Total Assets</small></div>
+        <div class="rv dim">0.532x</div>
+        <div class="rv" style="color:#2ed8a8">0.478x</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:48%;background:#2ed8a8"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECONDARY RATIOS ROW -->
+  <div class="g4" style="margin-bottom:22px">
+
+    <div class="rc">
+      <div class="rc-head">
+        <div class="rc-dot" style="background:#a78bfa"></div>
+        <div class="rc-title">Efficiency</div>
+      </div>
+      <div class="rr">
+        <div class="rn">Gross Margin<small>Gross Profit / Revenue</small></div>
+        <div class="rv dim">19.2%</div>
+        <div class="rv" style="color:#a78bfa">16.3%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:82%;background:#a78bfa"></div></div>
+        </div>
+      </div>
+      <div class="rr">
+        <div class="rn">EBIT Margin<small>EBIT / Revenue</small></div>
+        <div class="rv dim">10.8%</div>
+        <div class="rv" style="color:#a78bfa">9.4%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:47%;background:#a78bfa"></div></div>
+        </div>
+      </div>
+      <div class="rr">
+        <div class="rn">Net Margin<small>Net Income / Revenue</small></div>
+        <div class="rv dim">15.2%</div>
+        <div class="rv" style="color:#a78bfa">12.4%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:62%;background:#a78bfa"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rc">
+      <div class="rc-head">
+        <div class="rc-dot" style="background:#f0c040"></div>
+        <div class="rc-title">Capital Allocation</div>
+      </div>
+      <div class="rr">
+        <div class="rn">CapEx (Mn TRY)<small>Property &amp; Equipment Acq.</small></div>
+        <div class="rv dim">43,963</div>
+        <div class="rv" style="color:#f0c040">80,117</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:82%;background:#f0c040"></div></div>
+        </div>
+      </div>
+      <div class="rr">
+        <div class="rn">CapEx / Revenue<small>Investment Intensity</small></div>
+        <div class="rv dim">5.9%</div>
+        <div class="rv" style="color:#f0c040">8.4%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:42%;background:#f0c040"></div></div>
+        </div>
+      </div>
+      <div class="rr">
+        <div class="rn">FCF Conversion<small>FCF / Net Income</small></div>
+        <div class="rv dim">99.3%</div>
+        <div class="rv" style="color:#f0c040">89.5%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:90%;background:#f0c040"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rc">
+      <div class="rc-head">
+        <div class="rc-dot" style="background:#2ed8a8"></div>
+        <div class="rc-title">Growth Metrics</div>
+      </div>
+      <div class="rr">
+        <div class="rn">Revenue Growth<small>YoY %</small></div>
+        <div class="rv dim">—</div>
+        <div class="rv" style="color:#2ed8a8">+28.2%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#2ed8a8">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:100%;background:#2ed8a8"></div></div>
+        </div>
+      </div>
+      <div class="rr">
+        <div class="rn">EBITDA Growth<small>YoY %</small></div>
+        <div class="rv dim">—</div>
+        <div class="rv" style="color:#2ed8a8">+21.0%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#2ed8a8">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:79%;background:#2ed8a8"></div></div>
+        </div>
+      </div>
+      <div class="rr">
+        <div class="rn">Asset Growth<small>Total Assets YoY %</small></div>
+        <div class="rv dim">—</div>
+        <div class="rv" style="color:#2ed8a8">+42.7%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#2ed8a8">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:100%;background:#2ed8a8"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rc">
+      <div class="rc-head">
+        <div class="rc-dot" style="background:#f59e0b"></div>
+        <div class="rc-title">Debt Structure</div>
+      </div>
+      <div class="rr">
+        <div class="rn">Net Debt (Mn TRY)<small>Fin. Debt − Cash</small></div>
+        <div class="rv dim">393,947</div>
+        <div class="rv" style="color:#f59e0b">678,218</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:72%;background:#f59e0b"></div></div>
+        </div>
+      </div>
+      <div class="rr">
+        <div class="rn">Lease Liabilities<small>ST + LT Lease Debt (Mn TRY)</small></div>
+        <div class="rv dim">422,924</div>
+        <div class="rv" style="color:#f59e0b">638,976</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▲</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:68%;background:#f59e0b"></div></div>
+        </div>
+      </div>
+      <div class="rr">
+        <div class="rn">Equity / Total Assets<small>Financial Autonomy</small></div>
+        <div class="rv dim">48.6%</div>
+        <div class="rv" style="color:#f59e0b">45.6%</div>
+        <div class="bar-wrap">
+          <span class="chg" style="color:#f26060">▼</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:46%;background:#f59e0b"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EXECUTIVE SIGNAL PANEL -->
+  <div class="sh">Executive Signal Panel</div>
+  <div class="g4">
+
+    <div class="sig" style="border-left:3px solid var(--teal)">
+      <div class="sig-label" style="color:var(--teal)">✔ Strength</div>
+      <div class="sig-title">Revenue Momentum</div>
+      <div class="sig-body">Revenue surged 28.2% to TRY 955.5bn, with EBITDA reaching a record TRY 184.8bn (+21%). Interest coverage strengthened from 7.2x to 8.6x, signalling robust debt-service capacity despite elevated leverage.</div>
+    </div>
+
+    <div class="sig" style="border-left:3px solid var(--gold)">
+      <div class="sig-label" style="color:var(--gold)">⚠ Monitor</div>
+      <div class="sig-title">Margin Compression</div>
+      <div class="sig-body">Gross margin contracted 290 bps to 16.3%; net margin fell from 15.2% to 12.4%. COGS growth (+32.8%) outpaced revenue, driven by fuel, maintenance and FX-linked cost inflation. EBITDA margin held near 19%.</div>
+    </div>
+
+    <div class="sig" style="border-left:3px solid var(--red)">
+      <div class="sig-label" style="color:var(--red)">⚑ Watch</div>
+      <div class="sig-title">Rising Leverage</div>
+      <div class="sig-body">Net Debt/EBITDA climbed sharply from 2.58x to 3.67x. CapEx doubled to TRY 80.1bn (+82%), pushing investing cash flow deep negative at −TRY 144.7bn. Lease obligations (ST+LT) reached TRY 639bn.</div>
+    </div>
+
+    <div class="sig" style="border-left:3px solid var(--blue)">
+      <div class="sig-label" style="color:var(--blue)">ℹ Note</div>
+      <div class="sig-title">Equity &amp; Dividends</div>
+      <div class="sig-body">Total equity grew 34% to TRY 911.3bn, partly driven by FX translation reserves. First-ever dividend payment of TRY 8.95bn signals capital confidence. Equity ratio modestly declined to 45.6% as assets expanded faster.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    Source: Turkish Airlines (THY) Consolidated Financial Statements — 31 December 2025 (Independently Audited) | IFRS/IAS<br/>
+    All figures in TRY Millions unless stated. Ratios are calculated values. This document is for informational purposes only and does not constitute investment advice.
+  </div>
+  <div class="ftags">
+    <span class="ftag">IFRS / IAS</span>
+    <span class="ftag">FY 2025</span>
+    <span class="ftag">CFO FLASH v2.0</span>
+  </div>
+</footer>
+
+<script>
+Chart.defaults.color = '#5a6a85';
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.size = 11;
+
+// BAR CHART
+new Chart(document.getElementById('barChart'),{
+  type:'bar',
+  data:{
+    labels:['Revenue','EBITDA','EBIT','Net Income'],
+    datasets:[
+      {label:'FY2024',data:[745430,152699,80393,113357],backgroundColor:'#1e2d47',borderColor:'#2a3a56',borderWidth:1,borderRadius:4,barPercentage:0.6},
+      {label:'FY2025',data:[955472,184811,90129,118117],backgroundColor:'#f0c040',borderWidth:0,borderRadius:4,barPercentage:0.6}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#0e1525',borderColor:'#1c273d',borderWidth:1,
+        callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toLocaleString('en-US')+' Mn TRY'}
+      }
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{color:'#5a6a85'},border:{color:'rgba(255,255,255,0.05)'}},
+      y:{
+        grid:{color:'rgba(255,255,255,0.04)'},
+        ticks:{color:'#5a6a85',callback:v=>v>=1000?(v/1000).toFixed(0)+'B':v},
+        border:{color:'transparent'}
+      }
+    }
+  }
+});
+
+// MARGIN CHART
+new Chart(document.getElementById('marginChart'),{
+  type:'bar',
+  data:{
+    labels:['Gross\nMargin','EBITDA\nMargin','EBIT\nMargin','Net\nMargin'],
+    datasets:[
+      {label:'FY2024',data:[19.17,20.48,10.78,15.21],backgroundColor:'#1e2d47',borderColor:'#2a3a56',borderWidth:1,borderRadius:4,barPercentage:0.65},
+      {label:'FY2025',data:[16.28,19.34,9.43,12.36],backgroundColor:'#6ab4f5',borderWidth:0,borderRadius:4,barPercentage:0.65}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#0e1525',borderColor:'#1c273d',borderWidth:1,
+        callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toFixed(1)+'%'}
+      }
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{color:'#5a6a85',maxRotation:0},border:{color:'rgba(255,255,255,0.05)'}},
+      y:{
+        grid:{color:'rgba(255,255,255,0.04)'},
+        ticks:{color:'#5a6a85',callback:v=>v+'%'},
+        border:{color:'transparent'},max:26
+      }
+    }
+  }
+});
+
+// ASSET DONUT
+new Chart(document.getElementById('assetChart'),{
+  type:'doughnut',
+  data:{
+    labels:['ROU Assets','PP&E','Fin. Investments','Cash + AR','Other'],
+    datasets:[{
+      data:[847758,362618,297692,131826,356851],
+      backgroundColor:['#2ed8a8','#f0c040','#6ab4f5','#a78bfa','#1e2d47'],
+      borderColor:'#0e1525',borderWidth:3,hoverOffset:4
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,cutout:'70%',
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#0e1525',borderColor:'#1c273d',borderWidth:1,
+        callbacks:{label:c=>' '+c.label+': '+c.raw.toLocaleString('en-US')+' Mn TRY'}
+      }
+    }
+  }
+});
+
+// CASH FLOW CHART
+const cfColors25=[185813,-144669,-49234,105696].map(v=>v>=0?'#2ed8a8':'#f26060');
+new Chart(document.getElementById('cfChart'),{
+  type:'bar',
+  data:{
+    labels:['Operating CF','Investing CF','Financing CF','Free CF'],
+    datasets:[
+      {label:'FY2024',data:[156474,10003,-75360,112511],backgroundColor:'#1e2d47',borderColor:'#2a3a56',borderWidth:1,borderRadius:4,barPercentage:0.65},
+      {label:'FY2025',data:[185813,-144669,-49234,105696],backgroundColor:cfColors25,borderWidth:0,borderRadius:4,barPercentage:0.65}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#0e1525',borderColor:'#1c273d',borderWidth:1,
+        callbacks:{label:c=>{const s=c.raw>=0?'+':'';return' '+c.dataset.label+': '+s+c.raw.toLocaleString('en-US')+' Mn TRY';}}
+      }
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{color:'#5a6a85',maxRotation:0,font:{size:10}},border:{color:'rgba(255,255,255,0.05)'}},
+      y:{
+        grid:{color:'rgba(255,255,255,0.04)'},
+        ticks:{color:'#5a6a85',callback:v=>(Math.abs(v)>=1000?(v<0?'-':'')+Math.abs(v/1000).toFixed(0)+'B':v)},
+        border:{color:'transparent'}
+      }
+    }
+  }
+});
+
+// CAPITAL STRUCTURE DONUT
+new Chart(document.getElementById('capChart'),{
+  type:'doughnut',
+  data:{
+    labels:['ST Liabilities','LT Liabilities','Equity'],
+    datasets:[{
+      data:[442076,643413,911256],
+      backgroundColor:['#f26060','#f59e0b','#2ed8a8'],
+      borderColor:'#0e1525',borderWidth:3,hoverOffset:4
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,cutout:'70%',
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#0e1525',borderColor:'#1c273d',borderWidth:1,
+        callbacks:{label:c=>' '+c.label+': '+c.raw.toLocaleString('en-US')+' Mn TRY'}
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
